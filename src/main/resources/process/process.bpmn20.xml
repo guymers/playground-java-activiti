@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn"
-	xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
-	xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema"
-	expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-	<process id="test-process" name="A Test Process">
-		<userTask id="usertask1" name="First User Task">
-			<extensionElements>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:activiti="http://activiti.org/bpmn"
+	xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+	xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+	xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+	typeLanguage="http://www.w3.org/2001/XMLSchema"
+	expressionLanguage="http://www.w3.org/1999/XPath"
+	targetNamespace="http://www.activiti.org/test"
+	xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+	
+	<process id="test-process" name="A Test Process" isExecutable="true">
+		<userTask id="usertask1" name="First User Task" activiti:formKey="enter_info">
+			<!--extensionElements>
 				<activiti:formProperty id="room" />
-			</extensionElements>
+			</extensionElements-->
 			<potentialOwner>
 				<resourceAssignmentExpression>
-					<formalExpression>1</formalExpression>
+					<formalExpression>${groups.user}</formalExpression>
 				</resourceAssignmentExpression>
 			</potentialOwner>
 		</userTask>
+		
 		<manualTask id="manualtask1" name="Manual Task">
 			<potentialOwner>
 				<resourceAssignmentExpression>
-					<formalExpression>2</formalExpression>
+					<formalExpression>${groups.leader}</formalExpression>
 				</resourceAssignmentExpression>
 			</potentialOwner>
 		</manualTask>
-		<startEvent id="startevent1" name="Start"></startEvent>
-		<sequenceFlow id="flow1" name="" sourceRef="startevent1"
-			targetRef="usertask1"></sequenceFlow>
-		<sequenceFlow id="flow2" name="" sourceRef="usertask1"
-			targetRef="manualtask1"></sequenceFlow>
-		<userTask id="usertask2" name="Second User Task">
+		
+		<startEvent id="startevent1" name="Start" activiti:formKey="start_enter_info"></startEvent>
+		
+		<sequenceFlow id="flow1" name="" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
+		
+		<sequenceFlow id="flow2" name="" sourceRef="usertask1" targetRef="manualtask1"></sequenceFlow>
+		
+		<userTask id="usertask2" name="Second User Task" activiti:formKey="enter_info_again">
 			<potentialOwner>
 				<resourceAssignmentExpression>
-					<formalExpression>3</formalExpression>
+					<formalExpression>${groups.manager}</formalExpression>
 				</resourceAssignmentExpression>
 			</potentialOwner>
 		</userTask>
-		<sequenceFlow id="flow4" name="" sourceRef="manualtask1"
-			targetRef="usertask2"></sequenceFlow>
+		
+		<sequenceFlow id="flow4" name="" sourceRef="manualtask1" targetRef="usertask2"></sequenceFlow>
+			
 		<endEvent id="endevent1" name="End"></endEvent>
-		<sequenceFlow id="flow5" name="" sourceRef="usertask2"
-			targetRef="endevent1"></sequenceFlow>
+		
+		<sequenceFlow id="flow5" name="" sourceRef="usertask2" targetRef="endevent1"></sequenceFlow>
+		
 	</process>
 	<bpmndi:BPMNDiagram id="BPMNDiagram_test-process">
 		<bpmndi:BPMNPlane bpmnElement="test-process"

@@ -1,24 +1,71 @@
 package me.guymer.activiti.users;
 
-import java.util.Collections;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.inject.Inject;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import me.guymer.activiti.AbstractRepository;
+
+import org.activiti.engine.impl.Page;
+import org.activiti.engine.impl.UserQueryImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDAO {
-
-	@Inject
-	private NamedParameterJdbcTemplate jdbcTemplate;
+public class UserDAO extends AbstractRepository<User> {
 	
-	public User getUserById(int id) {
-		String sql = "SELECT id, first_name, surname, email, password FROM blah_users WHERE id = :id";
-		Map<String, Integer> paramMap = Collections.singletonMap("id", id);
-		
-		return jdbcTemplate.queryForObject(sql, paramMap, new BeanPropertyRowMapper<User>(User.class));
+	public UserDAO() {
+		super(User.class);
 	}
+	
+	public List<User> getUsers(UserQueryImpl userQuery, Page page) {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+		
+		Root<User> user = criteriaQuery.from(User.class);
+		
+		criteriaQuery.select(user);
+		
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		
+		if (userQuery.getFirstName() != null) {
+			Predicate firstNameEqual = criteriaBuilder.equal(user.get(User_.firstName), userQuery.getFirstName());
+			
+			predicates.add(firstNameEqual);
+		}
+		
+		if (userQuery.getFirstNameLike() != null) {
+			Predicate firstNameEqual = criteriaBuilder.like(user.get(User_.firstName), userQuery.getFirstNameLike());
+			
+			predicates.add(firstNameEqual);
+		}
+		
+		if (userQuery.getLastName() != null) {
+			Predicate lastNameEqual = criteriaBuilder.equal(user.get(User_.surname), userQuery.getLastName());
+			
+			predicates.add(lastNameEqual);
+		}
+		
+		if (userQuery.getLastNameLike() != null) {
+			Predicate lastNameEqual = criteriaBuilder.like(user.get(User_.surname), userQuery.getLastNameLike());
+			
+			predicates.add(lastNameEqual);
+		}
+		
+		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+		
+		TypedQuery<User> query = entityManager.createQuery(criteriaQuery);
+		
+		if (page != null) {
+			query.setFirstResult(page.getFirstResult());
+			query.setMaxResults(page.getMaxResults());
+		}
+		
+		return query.getResultList();
+	}
+	
 }

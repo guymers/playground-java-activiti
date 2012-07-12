@@ -1,34 +1,39 @@
 package me.guymer.activiti.groups;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import javax.inject.Inject;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.SetJoin;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import me.guymer.activiti.AbstractRepository;
+import me.guymer.activiti.users.User;
+import me.guymer.activiti.users.User_;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class GroupDAO {
+public class GroupDAO extends AbstractRepository<Group> {
 
-	@Inject
-	private NamedParameterJdbcTemplate jdbcTemplate;
+	public GroupDAO() {
+		super(Group.class);
+	}
 	
-	public Group getGroupById(int id) {
-		String sql = "SELECT id, name FROM blah_groups WHERE id = :id";
-		Map<String, Integer> paramMap = Collections.singletonMap("id", id);
+	public List<Group> getByUserId(int userId) {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Group> criteriaQuery = criteriaBuilder.createQuery(Group.class);
 		
-		return jdbcTemplate.queryForObject(sql, paramMap, new BeanPropertyRowMapper<Group>(Group.class));
-	}
-
-	public List<Group> getGroupsByUserId(int id) {
-		String sql = "SELECT blah_groups.id, blah_groups.name FROM blah_groups ";
-		sql += "JOIN blah_users_groups ON blah_users_groups.group_id = blah_groups.id ";
-		sql += "WHERE blah_users_groups.user_id = :id";
-		Map<String, Integer> paramMap = Collections.singletonMap("id", id);
+		Root<Group> group = criteriaQuery.from(Group.class);
+		SetJoin<Group, User> user = group.join(Group_.users);
 		
-		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Group>(Group.class));
+		criteriaQuery.select(group);
+		criteriaQuery.where(criteriaBuilder.equal(user.get(User_.id), userId));
+		
+		TypedQuery<Group> query = entityManager.createQuery(criteriaQuery);
+		
+		return query.getResultList();
 	}
+	
 }

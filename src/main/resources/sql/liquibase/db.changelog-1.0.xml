@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet id="1" author="author">
+		<createTable tableName="group">
+			<column name="group_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<insert tableName="group">
+			<column name="name" value="user" />
+		</insert>
+		
+		<insert tableName="group">
+			<column name="name" value="leader" />
+		</insert>
+		
+		<insert tableName="group">
+			<column name="name" value="manager" />
+		</insert>
+		
+		<createTable tableName="user">
+			<column name="user_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="first_name" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="surname" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="email" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="password" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<insert tableName="user">
+			<column name="first_name" value="test1" />
+			<column name="surname" value="user1" />
+			<column name="email" value="test1.user1@email.com" />
+			<column name="password" value="password1" />
+		</insert>
+		
+		<insert tableName="user">
+			<column name="first_name" value="test2" />
+			<column name="surname" value="user2" />
+			<column name="email" value="test2.user2@email.com" />
+			<column name="password" value="password2" />
+		</insert>
+		
+		<insert tableName="user">
+			<column name="first_name" value="test3" />
+			<column name="surname" value="user3" />
+			<column name="email" value="test3.user3@email.com" />
+			<column name="password" value="password3" />
+		</insert>
+		
+		<createTable tableName="user_group">
+			<column name="user_id" type="int">
+				<constraints primaryKey="true" nullable="false" foreignKeyName="fk_user_group_user_id" references="user(user_id)" />
+			</column>
+			<column name="group_id" type="int">
+				<constraints primaryKey="true" nullable="false" foreignKeyName="fk_user_group_group_id" references="group(group_id)" />
+			</column>
+		</createTable>
+		
+		<insert tableName="user_group">
+			<column name="user_id" valueNumeric="1" />
+			<column name="group_id" valueNumeric="1" />
+		</insert>
+		
+		<insert tableName="user_group">
+			<column name="user_id" valueNumeric="2" />
+			<column name="group_id" valueNumeric="2" />
+		</insert>
+		
+		<insert tableName="user_group">
+			<column name="user_id" valueNumeric="3" />
+			<column name="group_id" valueNumeric="3" />
+		</insert>
+		
+		<createTable tableName="complex_process">
+			<column name="complex_process_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="information" type="varchar(100)" />
+			<column name="amount" type="int" />
+		</createTable>
+	</changeSet>
+
+</databaseChangeLog>

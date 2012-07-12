@@ -1,49 +1,47 @@
 package me.guymer.activiti.users;
 
-public class User {
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import lombok.Data;
+import me.guymer.activiti.groups.Group;
+
+@Data
+@Entity
+@Table(name = "\"user\"")
+public class User implements Serializable {
+	
+	private static final long serialVersionUID = 3792368670716745587L;
+	
+	@Id
+	@GeneratedValue
+	@Column(name = "user_id")
 	private int id;
+	
+	@Column(name = "first_name", length = 100, nullable = false)
 	private String firstName;
+	
+	@Column(name = "surname", length = 100, nullable = false)
 	private String surname;
+	
+	@Column(name = "email", length = 100, nullable = false)
 	private String email;
+	
+	@Column(name = "password", length = 100, nullable = false)
 	private String password;
 	
-	public int getId() {
-		return id;
-	}
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "user_group", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "group_id") })
+	private Set<Group> groups;
 	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public String getFirstName() {
-		return firstName;
-	}
-	
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	public String getSurname() {
-		return surname;
-	}
-	
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }
