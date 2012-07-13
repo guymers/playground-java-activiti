@@ -5,7 +5,7 @@
 	xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema"
 	expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test"
 	xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
-	<process id="complex-process" name="Complex Process">
+	<process id="complex-process" name="Complex Process" isExecutable="true">
 		<startEvent id="startevent1" name="Start" activiti:formKey="complex-process/start"></startEvent>
 		<endEvent id="endevent1" name="End"></endEvent>
 		<userTask id="usertask1" name="Complex User Task 1" activiti:formKey="complex-process/user_task_1">

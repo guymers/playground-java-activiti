@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -12,10 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -39,9 +39,13 @@ public class PersistenceConfig {
 	@Inject
 	private DataSource dataSource;
 	
+	@Inject
+	private EntityManagerFactory entityManagerFactory;
+	
 	@Bean
-	public PlatformTransactionManager transactionManager() {
-		final DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+	public JpaTransactionManager transactionManager() throws Exception {
+		final JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(entityManagerFactory);
 		
 		return transactionManager;
 	}

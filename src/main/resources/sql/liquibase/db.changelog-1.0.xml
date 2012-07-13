@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
 	<changeSet id="1" author="author">
-		<createTable tableName="group">
+		<createTable tableName="groups">
 			<column name="group_id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -13,19 +13,19 @@
 			</column>
 		</createTable>
 		
-		<insert tableName="group">
+		<insert tableName="groups">
 			<column name="name" value="user" />
 		</insert>
 		
-		<insert tableName="group">
+		<insert tableName="groups">
 			<column name="name" value="leader" />
 		</insert>
 		
-		<insert tableName="group">
+		<insert tableName="groups">
 			<column name="name" value="manager" />
 		</insert>
 		
-		<createTable tableName="user">
+		<createTable tableName="users">
 			<column name="user_id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -43,47 +43,47 @@
 			</column>
 		</createTable>
 		
-		<insert tableName="user">
+		<insert tableName="users">
 			<column name="first_name" value="test1" />
 			<column name="surname" value="user1" />
 			<column name="email" value="test1.user1@email.com" />
 			<column name="password" value="password1" />
 		</insert>
 		
-		<insert tableName="user">
+		<insert tableName="users">
 			<column name="first_name" value="test2" />
 			<column name="surname" value="user2" />
 			<column name="email" value="test2.user2@email.com" />
 			<column name="password" value="password2" />
 		</insert>
 		
-		<insert tableName="user">
+		<insert tableName="users">
 			<column name="first_name" value="test3" />
 			<column name="surname" value="user3" />
 			<column name="email" value="test3.user3@email.com" />
 			<column name="password" value="password3" />
 		</insert>
 		
-		<createTable tableName="user_group">
+		<createTable tableName="users_groups">
 			<column name="user_id" type="int">
-				<constraints primaryKey="true" nullable="false" foreignKeyName="fk_user_group_user_id" references="user(user_id)" />
+				<constraints primaryKey="true" nullable="false" foreignKeyName="fk_user_group_user_id" references="users(user_id)" />
 			</column>
 			<column name="group_id" type="int">
-				<constraints primaryKey="true" nullable="false" foreignKeyName="fk_user_group_group_id" references="group(group_id)" />
+				<constraints primaryKey="true" nullable="false" foreignKeyName="fk_user_group_group_id" references="groups(group_id)" />
 			</column>
 		</createTable>
 		
-		<insert tableName="user_group">
+		<insert tableName="users_groups">
 			<column name="user_id" valueNumeric="1" />
 			<column name="group_id" valueNumeric="1" />
 		</insert>
 		
-		<insert tableName="user_group">
+		<insert tableName="users_groups">
 			<column name="user_id" valueNumeric="2" />
 			<column name="group_id" valueNumeric="2" />
 		</insert>
 		
-		<insert tableName="user_group">
+		<insert tableName="users_groups">
 			<column name="user_id" valueNumeric="3" />
 			<column name="group_id" valueNumeric="3" />
 		</insert>

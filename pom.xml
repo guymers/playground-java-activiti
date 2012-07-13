@@ -4,9 +4,14 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.guymer</groupId>
-	<artifactId>activiti</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>activiti-testing</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
+
+	<scm>
+		<connection>scm:git:https://github.com/activiti-testing.git</connection>
+		<url>http://github.com/guymers/activiti-testing</url>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -263,6 +268,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
 				<executions>
 					<execution>
 						<id>add-source</id>
@@ -319,4 +325,41 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.5.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.9.1</version>
+				<!-- dont generate checkstyle-aggregate as it has double each error -->
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>checkstyle</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+				<configuration>
+					<configLocation>${basedir}/checkstyle.xml</configLocation>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>2.7.1</version>
+				<configuration>
+					<targetJdk>${java-version}</targetJdk>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
 </project>

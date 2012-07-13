@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,13 +19,13 @@ import me.guymer.activiti.groups.Group;
 
 @Data
 @Entity
-@Table(name = "\"user\"")
+@Table(name = "users")
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 3792368670716745587L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private int id;
 	
@@ -41,7 +42,7 @@ public class User implements Serializable {
 	private String password;
 	
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "user_group", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "group_id") })
+	@JoinTable(name = "users_groups", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "group_id") })
 	private Set<Group> groups;
 	
 }

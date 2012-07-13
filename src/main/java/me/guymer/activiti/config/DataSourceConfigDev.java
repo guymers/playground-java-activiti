@@ -19,8 +19,6 @@ public class DataSourceConfigDev implements DataSourceConfig {
 	public DataSource dataSource() {
 		final EmbeddedDatabaseBuilder embeddedDatabaseBuilder = new EmbeddedDatabaseBuilder();
 		embeddedDatabaseBuilder.setType(EmbeddedDatabaseType.H2);
-		//embeddedDatabaseBuilder.addScript("classpath:sql/schema.sql");
-		//embeddedDatabaseBuilder.addScript("classpath:sql/data.sql");
 		
 		return embeddedDatabaseBuilder.build();
 	}

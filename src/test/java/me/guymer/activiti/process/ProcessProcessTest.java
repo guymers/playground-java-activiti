@@ -1,14 +1,10 @@
 package me.guymer.activiti.process;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.inject.Inject;
 
-import me.guymer.activiti.DatabaseTestConfig;
-import me.guymer.activiti.config.ActivitiConfig;
-import me.guymer.activiti.config.PersistenceConfig;
+import me.guymer.activiti.config.Config;
 
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -18,23 +14,25 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
+@ActiveProfiles("test")
 public class ProcessProcessTest {
 	
 	@Configuration
-	@Import({ DatabaseTestConfig.class, PersistenceConfig.class, ActivitiConfig.class })
-	@ComponentScan(basePackages = { "me.guymer.activiti.custom", "me.guymer.activiti.users", "me.guymer.activiti.groups" })
+	@Import(Config.class)
+	@PropertySource("classpath:properties/config.properties")
 	static class ContextConfiguration {
-		// required for @Value to work correctly
+		
 		@Bean
 		public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 			final PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
@@ -43,6 +41,7 @@ public class ProcessProcessTest {
 			properties.setProperty("process.path", "classpath:process/process.bpmn20.xml");
 			
 			propertySourcesPlaceholderConfigurer.setProperties(properties);
+			propertySourcesPlaceholderConfigurer.setLocalOverride(true);
 			
 			return propertySourcesPlaceholderConfigurer;
 		}
@@ -55,12 +54,8 @@ public class ProcessProcessTest {
 	private TaskService taskService;
 	
 	@Test
-	public void testBasicProcess() {
-		Map<String, Object> variables = new HashMap<String, Object>();
-		variables.put("customerName", "John Doe");
-		variables.put("amount", 15000L);
-		
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("test-process", variables);
+	public void testProcessProcess() {
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("test-process");
 		
 		String processInstanceId = processInstance.getProcessInstanceId();
 		

@@ -36,17 +36,18 @@ public class ComplexProcessService {
 	private ComplexProcessDAO complexProcessDAO;
 	
 	@Transactional
-	public void start(ComplexProcess complexProcess) {
+	public String start(ComplexProcess complexProcess) {
 		complexProcessDAO.create(complexProcess);
 		
 		String businessKey = Integer.toString(complexProcess.getId());
+		System.out.println(businessKey);
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ID, businessKey);
 		
-		runtimeService.startProcessInstanceByKey(ID, businessKey);
+		return processInstance.getProcessInstanceId();
 	}
 	
 	@Transactional
 	public void complete(Task task, ComplexProcess complexProcess) {
-		
 		ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
 		processDefinitionQuery.active();
 		processDefinitionQuery.processDefinitionId(task.getProcessDefinitionId());
@@ -54,7 +55,7 @@ public class ComplexProcessService {
 		ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
 		
 		if (ID.compareTo(processDefinition.getKey()) != 0) {
-			throw new IllegalArgumentException("task does not belong to process");
+			throw new IllegalArgumentException("task does not belong to this process");
 		}
 		
 		ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
