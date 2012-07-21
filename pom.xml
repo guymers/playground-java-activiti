@@ -240,46 +240,33 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
-				<configuration>
-					<source>${java-version}</source>
-					<target>${java-version}</target>
-					<compilerArgument>-proc:none</compilerArgument>
-				</configuration>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.bsc.maven</groupId>
-				<artifactId>maven-processor-plugin</artifactId>
-				<version>2.0.5</version>
+				
 				<executions>
 					<execution>
-						<id>process</id>
-						<goals>
-							<goal>process</goal>
-						</goals>
+						<id>apt</id>
 						<phase>generate-sources</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/generated-sources/</outputDirectory>
+							<source>${java-version}</source>
+							<target>${java-version}</target>
+							<proc>only</proc>
+							<annotationProcessors>
+								<annotationProcessor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</annotationProcessor>
+							</annotationProcessors>
 						</configuration>
 					</execution>
-				</executions>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
+					
 					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
+						<id>compile</id>
+						<phase>compile</phase>
 						<goals>
-							<goal>add-source</goal>
+							<goal>compile</goal>
 						</goals>
 						<configuration>
-							<sources>
-								<source>${project.build.directory}/generated-sources/</source>
-							</sources>
+							<source>${java-version}</source>
+							<target>${java-version}</target>
 						</configuration>
 					</execution>
 				</executions>
@@ -290,40 +277,10 @@
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.5</version>
 				<configuration>
-					<encoding>UTF-8</encoding>
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 		</plugins>
-
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.bsc.maven</groupId>
-										<artifactId>maven-processor-plugin</artifactId>
-										<versionRange>[2.0.5,)</versionRange>
-										<goals>
-											<goal>process</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<reporting>
