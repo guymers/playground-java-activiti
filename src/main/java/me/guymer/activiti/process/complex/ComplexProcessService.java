@@ -12,6 +12,8 @@ import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.activiti.engine.task.Task;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ComplexProcessService {
 	
 	public static final String ID = "complex-process";
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ComplexProcessService.class);
 	
 	@Inject
 	private RepositoryService repositoryService;
@@ -34,6 +38,10 @@ public class ComplexProcessService {
 	
 	@Inject
 	private ComplexProcessDAO complexProcessDAO;
+	
+	public void test(DelegateExecution execution) {
+		LOGGER.info("service task calls test method");
+	}
 	
 	@Transactional
 	public String start(ComplexProcess complexProcess) {
