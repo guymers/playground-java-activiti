@@ -20,56 +20,56 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MyGroupManager extends GroupManager {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(MyGroupManager.class);
-	
+
 	@Inject
 	private GroupService groupService;
-	
+
 	@Override
 	public Group createNewGroup(String groupId) {
 		throw new ActivitiException("My group manager doesn't support creating a new group");
 	}
-	
+
 	@Override
 	public void insertGroup(Group group) {
 		throw new ActivitiException("My group manager doesn't support inserting a new group");
 	}
-	
+
 	@Override
 	public void updateGroup(Group updatedGroup) {
 		throw new ActivitiException("My group manager doesn't support updating a group");
 	}
-	
+
 	@Override
 	public void deleteGroup(String groupId) {
 		throw new ActivitiException("My group manager doesn't support deleting a group");
 	}
-	
+
 	@Override
 	public GroupEntity findGroupById(String groupId) {
 		me.guymer.activiti.groups.Group group = groupService.findById(groupId);
-		
+
 		GroupEntity groupEntity = groupToGroupEntity(group);
-		
+
 		return groupEntity;
 	}
-	
+
 	@Override
 	public List<Group> findGroupsByUser(String userLogin) {
 		List<Group> groups = new ArrayList<Group>();
-		
+
 		List<me.guymer.activiti.groups.Group> myGroups = groupService.findGroupsByUserId(userLogin);
-		
+
 		for (me.guymer.activiti.groups.Group group : myGroups) {
 			GroupEntity groupEntity = groupToGroupEntity(group);
-			
+
 			groups.add(groupEntity);
 		}
-		
+
 		return groups;
 	}
-	
+
 	@Override
 	public GroupQuery createNewGroupQuery() {
 		LOGGER.info("createNewGroupQuery");
@@ -97,13 +97,12 @@ public class MyGroupManager extends GroupManager {
 		// TODO Auto-generated method stub
 		return super.findPotentialStarterUsers(proceDefId);
 	}
-	
+
 	private GroupEntity groupToGroupEntity(me.guymer.activiti.groups.Group group) {
 		GroupEntity groupEntity = new GroupEntity();
 		groupEntity.setId(Integer.toString(group.getId()));
 		groupEntity.setName(group.getName());
-		
+
 		return groupEntity;
 	}
-
 }

@@ -13,13 +13,12 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 @Profile("test")
 @PropertySource("classpath:properties/database.test.properties")
 public class DatabaseTestConfig {
-	
+
 	@Bean
 	public DataSource dataSource() {
 		final EmbeddedDatabaseBuilder embeddedDatabaseBuilder = new EmbeddedDatabaseBuilder();
 		embeddedDatabaseBuilder.setType(EmbeddedDatabaseType.H2);
-		
+
 		return embeddedDatabaseBuilder.build();
 	}
-	
 }

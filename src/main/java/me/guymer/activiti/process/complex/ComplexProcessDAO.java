@@ -6,9 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ComplexProcessDAO extends AbstractRepository<ComplexProcess> {
-	
+
 	public ComplexProcessDAO() {
 		super(ComplexProcess.class);
 	}
-	
 }

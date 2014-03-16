@@ -9,7 +9,7 @@
 	expressionLanguage="http://www.w3.org/1999/XPath"
 	targetNamespace="http://www.activiti.org/test"
 	xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
-	
+
 	<process id="basic-process" name="Basic Process" isExecutable="true">
 		<userTask id="usertask1" name="Basic First User Task" activiti:formKey="enter_info">
 			<potentialOwner>
@@ -18,14 +18,14 @@
 				</resourceAssignmentExpression>
 			</potentialOwner>
 		</userTask>
-		
+
 		<startEvent id="startevent1" name="Start"></startEvent>
-		
+
 		<sequenceFlow id="flow1" name="" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
-		
+
 		<endEvent id="endevent1" name="End"></endEvent>
-		
+
 		<sequenceFlow id="flow2" name="" sourceRef="usertask1" targetRef="endevent1"></sequenceFlow>
-		
+
 	</process>
 </definitions>

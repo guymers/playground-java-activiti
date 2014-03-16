@@ -13,13 +13,13 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 @Profile("dev")
 @PropertySource("classpath:properties/database.dev.properties")
 public class DataSourceConfigDev implements DataSourceConfig {
-	
+
 	@Bean
 	@Override
 	public DataSource dataSource() {
 		final EmbeddedDatabaseBuilder embeddedDatabaseBuilder = new EmbeddedDatabaseBuilder();
 		embeddedDatabaseBuilder.setType(EmbeddedDatabaseType.H2);
-		
+
 		return embeddedDatabaseBuilder.build();
 	}
 }

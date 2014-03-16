@@ -7,21 +7,20 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Groups {
-	
-	private String user = "1";
-	private String leader = "2";
-	private String manager = "3";
-	
+
+	private final String user = "1";
+	private final String leader = "2";
+	private final String manager = "3";
+
 	public String getUser() {
 		return user;
 	}
-	
+
 	public String getLeader() {
 		return leader;
 	}
-	
+
 	public String getManager() {
 		return manager;
 	}
-	
 }

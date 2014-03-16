@@ -13,19 +13,18 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Profile("web")
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
-	
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/", "classpath:/META-INF/web-resources/");
 	}
-	
+
 	@Bean
 	public ViewResolver internalResourceViewResolver() {
 		final InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
 		internalResourceViewResolver.setPrefix("/WEB-INF/views/");
 		internalResourceViewResolver.setSuffix(".jsp");
-		
+
 		return internalResourceViewResolver;
 	}
-	
 }

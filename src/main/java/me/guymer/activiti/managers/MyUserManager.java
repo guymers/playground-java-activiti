@@ -22,66 +22,66 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MyUserManager extends UserManager {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(MyUserManager.class);
-	
+
 	@Inject
 	private UserService userService;
-	
+
 	@Override
 	public User createNewUser(String userId) {
 		throw new ActivitiException("My user manager doesn't support creating a new user");
 	}
-	
+
 	@Override
 	public void insertUser(User user) {
 		throw new ActivitiException("My user manager doesn't support inserting a new user");
 	}
-	
+
 	@Override
 	public void updateUser(User updatedUser) {
 		throw new ActivitiException("My user manager doesn't support updating a user");
 	}
-	
+
 	@Override
 	public void deleteUser(String userId) {
 		throw new ActivitiException("My user manager doesn't support deleting a user");
 	}
-	
+
 	@Override
 	public UserEntity findUserById(String userId) {
 		LOGGER.info("findUserById {}", userId);
-		
+
 		me.guymer.activiti.users.User user = userService.findById(userId);
-		
+
 		UserEntity userEntity = userToUserEntity(user);
-		
+
 		LOGGER.info("findUserById {}", userEntity.getEmail());
-		
+
 		return userEntity;
 	}
-	
+
 	@Override
 	public UserQuery createNewUserQuery() {
 		LOGGER.info("createNewUserQuery");
 		// TODO Auto-generated method stub
 		return super.createNewUserQuery();
 	}
-	
+
 	@Override
 	public List<User> findUserByQueryCriteria(UserQueryImpl query, Page page) {
 		LOGGER.info("findUserByQueryCriteria");
-		
+
 		List<User> users = new ArrayList<User>();
-		
+
 		List<me.guymer.activiti.users.User> myUsers = userService.getUsers(query, page);
-		
+
 		for (me.guymer.activiti.users.User user : myUsers) {
 			UserEntity userEntity = userToUserEntity(user);
-			
+
 			users.add(userEntity);
 		}
-		
+
 		return users;
 	}
 
@@ -90,7 +90,7 @@ public class MyUserManager extends UserManager {
 		LOGGER.info("findUserCountByQueryCriteria");
 		// TODO replace with count(*) from database
 		List<User> users = findUserByQueryCriteria(query, null);
-		
+
 		return users.size();
 	}
 
@@ -100,7 +100,7 @@ public class MyUserManager extends UserManager {
 		// TODO Auto-generated method stub
 		return super.findGroupsByUser(userId);
 	}
-	
+
 	@Override
 	public IdentityInfoEntity findUserInfoByUserIdAndKey(String userId, String key) {
 		LOGGER.info("findUserInfoByUserIdAndKey");
@@ -125,10 +125,10 @@ public class MyUserManager extends UserManager {
 	@Override
 	public Boolean checkPassword(String userId, String password) {
 		// TODO: check the password in your domain and return the appropriate
-		
+
 		return false;
 	}
-	
+
 	private UserEntity userToUserEntity(me.guymer.activiti.users.User user) {
 		UserEntity userEntity = new UserEntity();
 		userEntity.setId(Integer.toString(user.getId()));
@@ -136,8 +136,7 @@ public class MyUserManager extends UserManager {
 		userEntity.setLastName(user.getSurname());
 		userEntity.setEmail(user.getEmail());
 		userEntity.setPassword(user.getPassword());
-		
+
 		return userEntity;
 	}
-
 }

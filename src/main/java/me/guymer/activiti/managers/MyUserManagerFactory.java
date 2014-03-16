@@ -12,7 +12,7 @@ public class MyUserManagerFactory implements SessionFactory {
 
 	@Inject
 	private MyUserManager myUserManager;
-	
+
 	@Override
 	public Class<?> getSessionType() {
 		return UserManager.class;

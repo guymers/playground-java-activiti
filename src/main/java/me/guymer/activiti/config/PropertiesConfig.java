@@ -10,13 +10,12 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Profile({"dev", "prod"})
 @PropertySource("classpath:properties/config.properties")
 public class PropertiesConfig {
-	
+
 	// required for @Value to work correctly
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 		final PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-		
+
 		return propertySourcesPlaceholderConfigurer;
 	}
-	
 }

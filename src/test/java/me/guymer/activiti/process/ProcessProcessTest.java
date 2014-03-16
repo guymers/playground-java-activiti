@@ -27,54 +27,53 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @ActiveProfiles("test")
 public class ProcessProcessTest {
-	
+
 	@Configuration
 	@Import(Config.class)
 	@PropertySource("classpath:properties/config.properties")
 	static class ContextConfiguration {
-		
+
 		@Bean
 		public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 			final PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-			
+
 			Properties properties = new Properties();
 			properties.setProperty("process.path", "classpath:process/process.bpmn20.xml");
-			
+
 			propertySourcesPlaceholderConfigurer.setProperties(properties);
 			propertySourcesPlaceholderConfigurer.setLocalOverride(true);
-			
+
 			return propertySourcesPlaceholderConfigurer;
 		}
 	}
-	
+
 	@Inject
 	private RuntimeService runtimeService;
-	
+
 	@Inject
 	private TaskService taskService;
-	
+
 	@Test
 	public void testProcessProcess() {
 		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("test-process");
-		
+
 		String processInstanceId = processInstance.getProcessInstanceId();
-		
+
 		Task userTask1 = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
-		
+
 		Assert.assertNotNull(userTask1);
 		Assert.assertEquals("First User Task", userTask1.getName());
-		
+
 		taskService.complete(userTask1.getId());
-		
+
 		Task userTask2 = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
-		
+
 		Assert.assertNotNull(userTask2);
 		Assert.assertEquals("Second User Task", userTask2.getName());
-		
+
 		taskService.complete(userTask2.getId());
-		
+
 		// process should be complete
 		Assert.assertEquals(0, runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).count());
-		
 	}
 }

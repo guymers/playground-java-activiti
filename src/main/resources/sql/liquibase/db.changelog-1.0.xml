@@ -12,19 +12,19 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		
+
 		<insert tableName="groups">
 			<column name="name" value="user" />
 		</insert>
-		
+
 		<insert tableName="groups">
 			<column name="name" value="leader" />
 		</insert>
-		
+
 		<insert tableName="groups">
 			<column name="name" value="manager" />
 		</insert>
-		
+
 		<createTable tableName="users">
 			<column name="user_id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
@@ -42,28 +42,28 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		
+
 		<insert tableName="users">
 			<column name="first_name" value="test1" />
 			<column name="surname" value="user1" />
 			<column name="email" value="test1.user1@email.com" />
 			<column name="password" value="password1" />
 		</insert>
-		
+
 		<insert tableName="users">
 			<column name="first_name" value="test2" />
 			<column name="surname" value="user2" />
 			<column name="email" value="test2.user2@email.com" />
 			<column name="password" value="password2" />
 		</insert>
-		
+
 		<insert tableName="users">
 			<column name="first_name" value="test3" />
 			<column name="surname" value="user3" />
 			<column name="email" value="test3.user3@email.com" />
 			<column name="password" value="password3" />
 		</insert>
-		
+
 		<createTable tableName="users_groups">
 			<column name="user_id" type="int">
 				<constraints primaryKey="true" nullable="false" foreignKeyName="fk_user_group_user_id" references="users(user_id)" />
@@ -72,22 +72,22 @@
 				<constraints primaryKey="true" nullable="false" foreignKeyName="fk_user_group_group_id" references="groups(group_id)" />
 			</column>
 		</createTable>
-		
+
 		<insert tableName="users_groups">
 			<column name="user_id" valueNumeric="1" />
 			<column name="group_id" valueNumeric="1" />
 		</insert>
-		
+
 		<insert tableName="users_groups">
 			<column name="user_id" valueNumeric="2" />
 			<column name="group_id" valueNumeric="2" />
 		</insert>
-		
+
 		<insert tableName="users_groups">
 			<column name="user_id" valueNumeric="3" />
 			<column name="group_id" valueNumeric="3" />
 		</insert>
-		
+
 		<createTable tableName="complex_process">
 			<column name="complex_process_id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />

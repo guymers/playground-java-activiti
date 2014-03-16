@@ -21,66 +21,65 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 public class PersistenceConfig {
-	
+
 	private static final String HIBERNATE_DIALECT = "hibernate.dialect";
-	
+
 	@Value("${jpa.domainPackageToScan}")
 	private String jpaDomainPackageToScan;
-	
+
 	@Value("${jpa.propertiesFileLocation}")
 	private String propertiesFileLocation;
-	
+
 	@Value("${" + HIBERNATE_DIALECT + "}")
 	private String hibernateDialect;
-	
+
 	@Value("${process.path}")
 	private String blah;
-	
+
 	@Inject
 	private DataSource dataSource;
-	
+
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
-	
+
 	@Bean
 	public JpaTransactionManager transactionManager() throws Exception {
 		final JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(entityManagerFactory);
-		
+
 		return transactionManager;
 	}
-	
+
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() throws IOException {
 		final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource);
-		
+
 		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-		
+
 		entityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter);
 		entityManagerFactoryBean.setPackagesToScan(jpaDomainPackageToScan);
-		
+
 		final Properties jpaProperties = jpaProperties();
 		jpaProperties.setProperty(HIBERNATE_DIALECT, hibernateDialect);
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
-		
+
 		return entityManagerFactoryBean;
 	}
-	
+
 	private Properties jpaProperties() throws IOException {
 		final Resource location = new ClassPathResource(propertiesFileLocation);
-		
+
 		final Properties jpaProperties = new Properties();
 		jpaProperties.load(location.getInputStream());
-		
+
 		return jpaProperties;
 	}
-	
+
 	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		final PersistenceExceptionTranslationPostProcessor exceptionTranslation = new PersistenceExceptionTranslationPostProcessor();
-		
+
 		return exceptionTranslation;
 	}
-	
 }

@@ -13,13 +13,13 @@ public class UserService {
 
 	@Inject
 	private UserDAO userDao;
-	
+
 	public User findById(String id) {
 		int userId = Integer.parseInt(id);
-		
+
 		return userDao.get(userId);
 	}
-	
+
 	public List<User> getUsers(UserQueryImpl query, Page page) {
 		return userDao.getUsers(query, page);
 	}

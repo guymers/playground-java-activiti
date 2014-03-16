@@ -7,9 +7,9 @@
 	xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
 	<process id="complex-process" name="Complex Process" isExecutable="true">
 		<startEvent id="startevent1" name="Start" activiti:formKey="complex-process/start"></startEvent>
-		
+
 		<serviceTask id="serviceTask1" name="My Java Service Task" activiti:expression="${complexProcessService.test(execution)}" />
-		
+
 		<endEvent id="endevent1" name="End"></endEvent>
 		<userTask id="usertask1" name="Complex User Task 1" activiti:formKey="complex-process/user_task_1">
 			<potentialOwner>
@@ -34,23 +34,23 @@
 		</userTask>
 		<sequenceFlow id="flow1" name="" sourceRef="startevent1" targetRef="serviceTask1"></sequenceFlow>
 		<sequenceFlow id="flow1-1" name="" sourceRef="serviceTask1" targetRef="usertask1"></sequenceFlow>
-		
+
 		<exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
-		
+
 		<sequenceFlow id="flow2" name="" sourceRef="usertask1" targetRef="exclusivegateway1"></sequenceFlow>
-		
+
 		<sequenceFlow id="flow3" name="" sourceRef="exclusivegateway1" targetRef="usertask2">
 			<conditionExpression xsi:type="tFormalExpression"><![CDATA[${complexProcessService.isUnderThreshold(execution)}]]></conditionExpression>
 		</sequenceFlow>
-		
+
 		<sequenceFlow id="flow4" name="" sourceRef="exclusivegateway1" targetRef="usertask3"/>
-		
+
 		<exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
-		
+
 		<sequenceFlow id="flow5" name="" sourceRef="usertask2" targetRef="exclusivegateway2"></sequenceFlow>
-		
+
 		<sequenceFlow id="flow6" name="" sourceRef="exclusivegateway2" targetRef="endevent1"></sequenceFlow>
-		
+
 		<sequenceFlow id="flow7" name="" sourceRef="usertask3" targetRef="exclusivegateway2"></sequenceFlow>
 	</process>
 	<bpmndi:BPMNDiagram id="BPMNDiagram_process1">

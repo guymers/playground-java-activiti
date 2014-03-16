@@ -9,7 +9,7 @@
 	expressionLanguage="http://www.w3.org/1999/XPath"
 	targetNamespace="http://www.activiti.org/test"
 	xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
-	
+
 	<process id="test-process" name="A Test Process" isExecutable="true">
 		<userTask id="usertask1" name="First User Task" activiti:formKey="enter_info">
 			<!--extensionElements>
@@ -21,7 +21,7 @@
 				</resourceAssignmentExpression>
 			</potentialOwner>
 		</userTask>
-		
+
 		<manualTask id="manualtask1" name="Manual Task">
 			<potentialOwner>
 				<resourceAssignmentExpression>
@@ -29,13 +29,13 @@
 				</resourceAssignmentExpression>
 			</potentialOwner>
 		</manualTask>
-		
+
 		<startEvent id="startevent1" name="Start" activiti:formKey="start_enter_info"></startEvent>
-		
+
 		<sequenceFlow id="flow1" name="" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
-		
+
 		<sequenceFlow id="flow2" name="" sourceRef="usertask1" targetRef="manualtask1"></sequenceFlow>
-		
+
 		<userTask id="usertask2" name="Second User Task" activiti:formKey="enter_info_again">
 			<potentialOwner>
 				<resourceAssignmentExpression>
@@ -43,13 +43,13 @@
 				</resourceAssignmentExpression>
 			</potentialOwner>
 		</userTask>
-		
+
 		<sequenceFlow id="flow4" name="" sourceRef="manualtask1" targetRef="usertask2"></sequenceFlow>
-			
+
 		<endEvent id="endevent1" name="End"></endEvent>
-		
+
 		<sequenceFlow id="flow5" name="" sourceRef="usertask2" targetRef="endevent1"></sequenceFlow>
-		
+
 	</process>
 	<bpmndi:BPMNDiagram id="BPMNDiagram_test-process">
 		<bpmndi:BPMNPlane bpmnElement="test-process"
