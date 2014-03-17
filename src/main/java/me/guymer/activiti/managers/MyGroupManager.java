@@ -13,13 +13,13 @@ import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.impl.GroupQueryImpl;
 import org.activiti.engine.impl.Page;
 import org.activiti.engine.impl.persistence.entity.GroupEntity;
-import org.activiti.engine.impl.persistence.entity.GroupManager;
+import org.activiti.engine.impl.persistence.entity.GroupEntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MyGroupManager extends GroupManager {
+public class MyGroupManager extends GroupEntityManager {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MyGroupManager.class);
 
@@ -37,22 +37,13 @@ public class MyGroupManager extends GroupManager {
 	}
 
 	@Override
-	public void updateGroup(Group updatedGroup) {
+	public void updateGroup(GroupEntity updatedGroup) {
 		throw new ActivitiException("My group manager doesn't support updating a group");
 	}
 
 	@Override
 	public void deleteGroup(String groupId) {
 		throw new ActivitiException("My group manager doesn't support deleting a group");
-	}
-
-	@Override
-	public GroupEntity findGroupById(String groupId) {
-		me.guymer.activiti.groups.Group group = groupService.findById(groupId);
-
-		GroupEntity groupEntity = groupToGroupEntity(group);
-
-		return groupEntity;
 	}
 
 	@Override
@@ -89,13 +80,6 @@ public class MyGroupManager extends GroupManager {
 		LOGGER.info("findGroupCountByQueryCriteria");
 		// TODO Auto-generated method stub
 		return super.findGroupCountByQueryCriteria(query);
-	}
-
-	@Override
-	public List<Group> findPotentialStarterUsers(String proceDefId) {
-		LOGGER.info("findPotentialStarterUsers");
-		// TODO Auto-generated method stub
-		return super.findPotentialStarterUsers(proceDefId);
 	}
 
 	private GroupEntity groupToGroupEntity(me.guymer.activiti.groups.Group group) {

@@ -12,10 +12,10 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.history.HistoryLevel;
 import org.activiti.engine.impl.interceptor.SessionFactory;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.activiti.spring.SpringProcessEngineConfiguration;
@@ -58,7 +58,7 @@ public class ActivitiConfig {
 		processEngineConfiguration.setTransactionManager(transactionManager);
 		processEngineConfiguration.setDatabaseSchemaUpdate("true");
 		processEngineConfiguration.setJobExecutorActivate(true);
-		processEngineConfiguration.setHistory(ProcessEngineConfiguration.HISTORY_FULL);
+		processEngineConfiguration.setHistory(HistoryLevel.FULL.getKey());
 		processEngineConfiguration.setCustomSessionFactories(sessionFactories);
 
 		PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();

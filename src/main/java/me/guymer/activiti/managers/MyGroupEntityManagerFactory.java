@@ -4,18 +4,18 @@ import javax.inject.Inject;
 
 import org.activiti.engine.impl.interceptor.Session;
 import org.activiti.engine.impl.interceptor.SessionFactory;
-import org.activiti.engine.impl.persistence.entity.GroupManager;
+import org.activiti.engine.impl.persistence.entity.GroupEntityManager;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyGroupManagerFactory implements SessionFactory {
-	
+public class MyGroupEntityManagerFactory implements SessionFactory {
+
 	@Inject
 	private MyGroupManager myGroupManager;
 
 	@Override
 	public Class<?> getSessionType() {
-		return GroupManager.class;
+		return GroupEntityManager.class;
 	}
 
 	@Override

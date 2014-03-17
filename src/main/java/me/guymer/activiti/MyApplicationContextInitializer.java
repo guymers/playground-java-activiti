@@ -10,7 +10,7 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
 	public void initialize(ConfigurableApplicationContext context) {
 		ConfigurableEnvironment env = context.getEnvironment();
 		env.addActiveProfile("web");
-		//env.addActiveProfile("dev");
-		env.addActiveProfile("prod");
+		env.addActiveProfile("dev");
+		//env.addActiveProfile("prod");
 	}
 }

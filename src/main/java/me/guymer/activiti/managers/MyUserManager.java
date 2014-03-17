@@ -15,13 +15,13 @@ import org.activiti.engine.impl.Page;
 import org.activiti.engine.impl.UserQueryImpl;
 import org.activiti.engine.impl.persistence.entity.IdentityInfoEntity;
 import org.activiti.engine.impl.persistence.entity.UserEntity;
-import org.activiti.engine.impl.persistence.entity.UserManager;
+import org.activiti.engine.impl.persistence.entity.UserEntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MyUserManager extends UserManager {
+public class MyUserManager extends UserEntityManager {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MyUserManager.class);
 
@@ -39,7 +39,7 @@ public class MyUserManager extends UserManager {
 	}
 
 	@Override
-	public void updateUser(User updatedUser) {
+	public void updateUser(UserEntity updatedUser) {
 		throw new ActivitiException("My user manager doesn't support updating a user");
 	}
 

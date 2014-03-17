@@ -2,7 +2,6 @@ package me.guymer.activiti.process.complex;
 
 import javax.inject.Inject;
 
-import org.activiti.engine.FormService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -32,9 +31,6 @@ public class ComplexProcessService {
 
 	@Inject
 	private TaskService taskService;
-
-	@Inject
-	private FormService formService;
 
 	@Inject
 	private ComplexProcessDAO complexProcessDAO;

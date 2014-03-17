@@ -99,7 +99,7 @@ public class HistoryController {
 	private List<HistoricTaskInstance> getTasks(String processInstanceId) {
 		List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery()
 				.processInstanceId(processInstanceId)
-				.orderByHistoricActivityInstanceStartTime()
+				.orderByHistoricTaskInstanceStartTime()
 				.asc()
 				.list();
 
